@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1716908932235-d865878b12a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #login-form {
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.3); /* 调整透明度 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: burlywood;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="login-form">
+    <h2 class="text-center">登录</h2>
+    <form id="userForm" action="/demo/login" method="post">
+        <div class="form-group">
+            <label for="username">用户名:</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <input type="submit" class="btn" value="登录">
+        <input type="button" value="登录" onclick="login2()">
+    </form>
+</div>
+<script >
+       function login()
+       {
+           var username = document.getElementById("username").value;
+           var password = document.getElementById("password").value;
+           var formDate = "username=" + username + "&password=" + password;
+           var req=new XMLHttpRequest();
+           req.open("POST","/demo/login",true);
+           req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+           req.send(formDate);
+           req.onreadystatechange=function()
+           {
+               if(req.readyState==4 && req.status==200)
+               {
+                 alert(req.responseText);
+
+               }
+           }
+       }
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1717226263667-7ce6f7f35d9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        #chat {
+            width: 300px;
+            height: 230px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.3);
+            overflow-y: auto;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        #content {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="button"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div id="chat">
+
+</div>
+<textarea id="content" rows="6" cols="50"></textarea>
+<input type="button" value="发送" onclick="send()">
+<script>
+    function send(){
+        var e = document.getElementById("content");
+        var data = "content=" + e.value;
+        data = data.trim();
+        var req = new XMLHttpRequest();
+        req.open("POST", "/demo/test", true);
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        req.send(data);
+        req.onreadystatechange = function(){
+            if(req.readyState == 4 && req.status == 200) {
+                var result = req.responseText;
+                document.getElementById("chat").innerHTML += result + "<br/>";
+                document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight;
+            }
+        }
+        e.value = "";
+    }
+</script>
+</body>
+</html>
